@@ -1,0 +1,80 @@
+import json
+import os
+import jieba
+from rapidfuzz import process, fuzz
+from concurrent.futures import ThreadPoolExecutor,as_completed
+class SkillNormalizer:
+    _instance = None
+    _initialized = False
+
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
+    def __init__(self):
+        if self._initialized:
+            return
+        try:
+
+
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            file_path = os.path.join(current_dir, '技能.txt')
+            jieba.initialize()
+            jieba.load_userdict(file_path)
+            with open(file_path,'r',encoding='utf-8') as f:
+                df=f.readlines()
+            df_set = set(df)
+            file_path1 = os.path.join(current_dir, '技能map.json')
+            with open(file_path1,'r',encoding='utf-8') as f:
+                self.df_map=json.loads(f.read())
+        except Exception as e:
+            raise RuntimeError("加载技能出错") from e
+        self.standard_skills = {skill.replace('\n','').lower()  for skill in df_set}
+        self._initialized=True
+        """
+        for word in self.standard_skills.keys():
+            jieba.add_word(word)
+        """
+
+        self._initialized = True
+    @staticmethod
+    def process_data(token,words_list):
+        match, score, _ = process.extractOne(token, words_list, scorer=fuzz.ratio)
+        #print(match,score)
+        if score > 90:
+            #print(token,match)
+            return match
+
+    async def skill_nor(self, input_skill):
+        result = []
+        input_skill = input_skill.lower().replace(' ','')
+        #print(input_skill)
+        seg_list_ = jieba.lcut(input_skill, cut_all=False)
+        seg_list=[]
+        for index,x in enumerate(seg_list_):
+            if x not in [' ', '(', ')', '（', '）']:
+                seg_list.append(x)
+            if x =='/':
+                seg_list.append(seg_list_[index-1]+x+seg_list_[index+1])
+        #print(seg_list)
+        words_list = list(self.standard_skills)
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            futures =[executor.submit(self.process_data,token,words_list) for token in seg_list]
+        for future in as_completed(futures):
+            if future.result():
+                result.append(self.df_map.get(future.result(),future.result()))
+        return list(set(result))
+
+    async def process_skill(self,key,value):
+        result=await self.skill_nor(value)
+        return {'SKILL_NAME':result}
+#a5="王艳 | 女 | 35 岁(1983/9/29) | 10年工作经验   ID:167105321手机:  18850742386邮箱:  wy20080504@163.com居住地:  福州-仓山区求职状态:  目前正在找工作最近工作职位: 综合管理采购专员 公司: 福州兴春赠品有限公司行业: 贸易/进出口最高学历/学位专业: 物流管理学校: 武汉大学学历/学位: 本科个人信息户口/国籍: 福州目前年收入   6万元 (包含基本工资、补贴、奖金、股权收益等)求职意向期望薪资: 4500-5999 元/月地点: 福州职能/职位: 物流主管 物流专员/助理 仓库经理/主管 客服主管 采购员  其他个人标签: 努力认真 积极负责 喜欢挑战 敢于尝试 抗压能力自我评价: 对工作努力认真、积极负责,对事物有敏锐的洞察力,能很好的与人沟通,具有良好的团队合作精神,对负责的工作会付出全部的经历和热情,制定慎密计划,力争在最短时间内将目标达成,喜欢挑战,敢于尝试新工作,有较强的责任心及一定的抗压能力,能在较短时间内适应工作.持有C1驾驶证.到岗时间: 1个月内工作类型: 全职工作经验2016/1-2018/10 综合管理采购专员  |  物控中心福州兴春赠品有限公司 [2年9个月]贸易/进出口 | 150-500人 | 民营公司工作描述: 2016年1月至2018年10月在福州兴春赠品有限公司物控中心工作,担任综合管理专员/采购专员一职,在此期间工作认真负责、积极主动、吃苦耐劳、勇于创新、有较强的适应能力和协调能力.工作内容:1.从订单专员或业务员处接收订单需求,根据物料库存和购备状况评审订单,回复交期.2.全面掌握库存情况,根据库存提出部分采购需求计划.3.合理地制定物料发放计划,确保生产的均衡性、可操作性、合理性,确保收料、发料的畅通,各仓货品分仓明确,物流畅通.4.及时与采购员、仓管员核对出入库记录,做到账物相符,发现问题及时处理、及时上报.5.督促仓管员做好各类台账及出入库单证整理,登记入账,以便统计和核查.6.审核仓库的出入库单据,成本核算.7.转岗采购专员:(1)对现有供应商资料进行整理,筛选、评估供应商.(2)根据公司订单需求制定采购订单合同,并通知各家供应商对订单时间和数量进行确认、异常处理及保存.(4)监督、跟催采购订单的到货情况.(5)负责采购供应商的对账及报销请款事项.8.有关部门之间事务的沟通与协调.9.领导交办的其他事宜等.2014/8-2015/11 调度兼统计  |  集团物流中心福建久策集团有限公司 [1年3个月]石油/化工/矿产/地质 | 500-1000人 | 民营公司工作描述: 2014年8月至2015年11月在福建久策气体集团有限公司集团物流中心工作,担任集团调度兼统计工作,期间严格遵守公司规章制度,虚心学习,敢于尝试新工作,得到公司领导好评.工作内容:1.按公司规定负责所管辖片区的货物配送工作.2.负责货物的合理配载及货物库存情况处理.3.负责处理客户咨询与相应的投诉.4.及时处理司机送货与客户沟通中遇到的各种情况,及货物装载工作.5.货物配送信息及时录入相应系统.6.负责福州公司日常单据整理分类,录入相应系统与相应对接人员移交.7.负责福州公司车队司机日常报销、审核工作.8.负责部门人员考勤、考核统计,制作报表工作.9.GPS日常监控及异常监控记录,及时告知司机并向上一级领导汇报.10.完成领导交办的其他事宜.2008/6-2014/6 客服主管/采购专员  |  客服部/成控中心福建盛丰物流集团有限公司 [6年]交通/运输/物流 | 1000-5000人 | 民营公司工作描述: 1、2008年6月至2014年3月在盛丰物流集团武汉分公司工作,最后岗位是客服部经理.在此期间,工作认真、态度诚恳、勤于吃苦、虚心学习,敢于接受挑战、尝试新工作,受到公司领导和客户的好评.对物流公司运营操作岗位,例如:客服岗位、单证岗位、统计核算岗位、结算岗位、仓储管理岗位都有实际工作经验,熟悉一般物流公司操作流程.2.2014年4月至2014年6月在盛丰物流集团总部成控中心采购部工作,担任采购专员一职,(1)期间严格遵守公司规章制度.(2)对现有供应商资料进行整理.(3)根据公司生产需求制定采购订单,并通知各家供应商对订单时间和数量进行确认、回传、异常处理及保存.(4)监督、跟催采购订单的到货情况.(5)负责采购供应商的对账及报销请款事项.教育经历2004/9-2008/6 武汉大学本科 | 物流管理专业描述: 物流管理、现代物流与供应链管理、物流企业财务管理、物流管理软件操作、物流战略规划与模式、物流企业战略管理、国际物流、生产与作业管理、国际贸易、西方经济学、市场营销、电子商务与现代物流、数据库与网络基础、管理信息系统、物流技术与应用、运筹学、统计学等."
+#a7="应聘职位:详情ID:637911256冯一奇   立即聊天      视频面试点击获取二维码微信扫码转发简历邀请同事参与协作男   |   24岁   |   现居住 上海   |   2年工作经验目前正在找工作    519216971@qq.com18017466861最近工作  (1年 4个月)职 位:   软件测试工程师公 司:   杭州青泓科技有限公司行 业:   计算机软件最高学历/学位专 业:   计算机科学与技术学 校:   上海建桥学院学历/学位:   本科求职意向软件测试工程师    上海    10000-14999 元/月全职   |    计算机软件到岗时间:   随时自我评价:   1、熟悉软件测试的理论与测试流程;2、熟练使用Xmind编写测试大纲,Excel编写测试用例;3、熟练使用禅道等bug 管理平台、及Git版本控制器;4、熟练掌握MySQL、SQLserver,能够进行增、删、改、查等命令;5、熟悉 linux 操作系统,掌握基本命令;6、熟练使用Charles 抓包工具,对抓取到的数据进行有效分析 ;7、熟悉使用 Jmeter、Postman 等测试工具;8、会用apifox,swagger 文档进行高效接口测试;9、了解python 语言.工作经验2020/7-至今   杭州青泓科技有限公司   (1年 4个月)计算机软件   |   民营公司测试部    软件测试工程师工作描述:   1、根据产品需求用 Xmind 编写测试需求分析思维导图,提取测试点,编写用例;2、参与测试需求、测试计划、测试方案、测试用例评审;3、参与冒烟、执行用例、提交 bug 缺陷单,编写测试报告;4、根据接口文档,使用 Jmeter、postman、apifox 进行接口测试;5、熟练运用抓包工具 Charles 准确定位问题点给到开发.2019/9-2020/7   上海仁竹信息科技有限公司   (10个月)计算机软件   |   民营公司测试部    软件测试工程师工作描述:   1、参与需求评审,编写测试用例并执行功能测试;2、负责项目功能测试;3、MySQL 数据库校验数据准确性;4、与项目团队保持沟通,快速响应团队需求,持续完成产品的质量保证工作,并不断优化相关流程.项目经验2020/7-至今   君龙人寿所属公司:   杭州青泓科技有限公司项目描述:   君龙人寿系统属于厦门建发集团有限公司和台湾人寿保险股份有限公司旗下后台业务支持系统,包括新契约、保全、理赔、收付管理,同时针对操作权限也只开放给公司部分岗位人员,如财务人员、运营人员.该系统作为后台业务支持系统提供了首付凭证打印、查询、财务收费、付费、财务费用明细查询、首/续期应记费用接口凭证查询、客户对公账户管理等等.我主要负责的是新契约模块,业务流程有受理、录入、复核、核保、承包五个环节组成.责任描述:   1、根据产品需求用 Xmind 编写测试需求分析思维导图,提取测试点,编写用例;2、参与测试需求、测试计划、测试方案、测试用例评审;3、参与冒烟、执行用例、提交 bug 缺陷单,编写测试报告;4、根据接口文档,使用 Jmeter、postman、apifox 进行接口测试;5、熟练运用抓包工具 Charles 准确定位问题点给到开发.2019/9-2020/7   大淘客所属公司:   上海仁竹信息科技有限公司项目描述:   项目描述:该项目主要是进行购买商品.主要分为前台页面展示和后台网页管理.前台做到页面展示合理,业务逻辑正确,业务流程能安全运行.后台包括数据的统计,对网站页面维护和对用户的管理,以实现网站的正常运作,其中以购买为主要流程.我主要负责的是用户注册模块和购物车购买模块.责任描述:   1、参与需求评审,编写测试用例并执行功能测试;2、负责项目功能测试;3、MySQL 数据库校验数据准确性;4、与项目团队保持沟通,快速响应团队需求,持续完成产品的质量保证工作,并不断优化相关流程.教育经历2016/9-2020/6   上海建桥学院本科   |   计算机科学与技术技能特长  (包括IT技能、语言能力、证书、成绩、培训经历)技能/语言MySQL    熟练普通话    精通MS Excel    熟练上海话    精通Linux    良好Python    一般MS WORD    熟练MS Powerpoint    熟练英语    一般SQL Server    良好"
+
+#match=SkillNormalizer()
+#print(match.skill_nor(a7))
+# 重置自定义字典
+#jieba.initialize()
+# 添加字典
+#jieba.load_userdict("技能扩展.txt")
