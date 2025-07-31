@@ -1,0 +1,10 @@
+services:
+  aftercure:
+    build:
+      context: .
+      dockerfile: ./cpu_shared/Dockerfile
+      target: aftercure
+    ports:
+      - "8005:8005"
+
+

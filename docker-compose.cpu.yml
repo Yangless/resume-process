@@ -1,0 +1,28 @@
+services:
+  resume-ner:
+    build:
+      context: .
+      dockerfile: ./cpu_shared/Dockerfile
+      target: resume-ner
+    ports:
+      - "8004:8004"
+    environment:
+      - COMPANY_URL=${COMPANY_URL}
+      - TOKEN=${TOKEN}
+    networks:
+      - shared-network
+
+  aftercure:
+    build:
+      context: .
+      dockerfile: ./cpu_shared/Dockerfile
+      target: aftercure
+    ports:
+      - "8005:8005"
+    networks:
+      - shared-network
+
+networks:
+  shared-network:
+    driver: bridge
+

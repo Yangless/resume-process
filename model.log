@@ -1,0 +1,79 @@
+2025-06-17 10:23:55,238 - model_ner - ERROR - string indices must be integers, not 'str':<built-in function id>
+2025-06-17 10:25:18,742 - model_ner - ERROR - string indices must be integers, not 'str':<built-in function id>
+2025-06-17 10:27:39,588 - model_ner - ERROR - string indices must be integers, not 'str':<built-in function id>
+2025-06-17 10:27:57,193 - model_ner - ERROR - string indices must be integers, not 'str':<built-in function id>
+2025-06-17 10:28:17,683 - model_ner - ERROR - string indices must be integers, not 'str':<built-in function id>
+2025-06-17 10:30:38,799 - model_ner - ERROR - string indices must be integers, not 'str':<built-in function id>
+2025-06-17 10:30:52,578 - model_ner - ERROR - string indices must be integers, not 'str':<built-in function id>
+2025-06-17 10:31:01,492 - model_ner - ERROR - string indices must be integers, not 'str':<built-in function id>
+2025-06-17 10:31:55,531 - model_ner - ERROR - string indices must be integers, not 'str':<built-in function id>
+2025-06-17 10:32:49,901 - model_ner - ERROR - string indices must be integers, not 'str':<built-in function id>
+2025-06-30 14:56:11,170 - model_ner - ERROR - 模型推理出错:Cannot use GPU, CuPy is not installed
+2025-07-03 10:08:56,972 - model_ner - ERROR - 模型推理出错:Server disconnected
+2025-07-03 10:24:56,442 - model_ner - ERROR - 模型推理出错:Server disconnected
+2025-07-03 10:27:27,769 - model_ner - ERROR - 模型推理出错:Server disconnected
+2025-07-03 10:31:46,301 - model_ner - ERROR - 模型推理出错:Server disconnected
+2025-07-03 10:34:21,163 - model_ner - INFO - 总耗时:5.107653856277466
+2025-07-03 10:37:07,161 - model_ner - INFO - 总耗时:2.526331663131714
+2025-07-03 10:46:42,668 - model_ner - INFO - 总耗时:4.933914661407471
+2025-07-03 10:48:45,850 - model_ner - INFO - 总耗时:4.0437376499176025
+2025-07-03 11:14:11,493 - model_ner - INFO - 总耗时:5.46448826789856
+2025-07-03 14:43:04,868 - model_ner - ERROR - 模型推理出错:Cannot use GPU, CuPy is not installed
+2025-07-03 14:44:02,267 - model_ner - ERROR - 模型推理出错:Server disconnected
+2025-07-03 14:44:47,508 - model_ner - ERROR - 模型推理出错:Server disconnected
+2025-07-03 14:45:58,339 - model_ner - INFO - 总耗时:6.346320390701294
+2025-07-03 14:53:16,145 - model_ner - INFO - 总耗时:2.6776952743530273
+2025-07-03 14:55:11,976 - model_ner - INFO - 总耗时:2.347116708755493
+2025-07-03 16:12:28,845 - model_ner - ERROR - 'NoneType' object is not subscriptable
+2025-07-03 18:06:18,276 - model_ner - ERROR - 'NoneType' object is not subscriptable
+2025-07-03 18:15:44,638 - model_ner - INFO - 总耗时:5.512314796447754
+2025-07-07 17:05:35,317 - model_ner - ERROR - cannot pickle 'coroutine' object
+2025-07-07 17:08:21,866 - model_ner - INFO - 总耗时:3.8129723072052
+2025-07-07 17:12:22,452 - model_ner - INFO - 总耗时:26.068354606628418
+2025-07-07 17:15:40,650 - model_ner - INFO - 总耗时:7.791499137878418
+2025-07-07 17:16:24,190 - model_ner - INFO - 总耗时:8.4235520362854
+2025-07-07 17:19:57,477 - model_ner - ERROR - 日期处理出错:time data '2016/07-2021/02' does not match format '%Y年%m月%d日'
+2025-07-07 17:19:57,821 - model_ner - ERROR - 日期处理出错:time data '2014/1' does not match format '%Y年%m月%d日'
+2025-07-07 17:19:58,125 - model_ner - ERROR - 日期处理出错:time data '2016/07-2021/02' does not match format '%Y年%m月%d日'
+2025-07-07 17:19:58,683 - model_ner - ERROR - 日期处理出错:time data '2006.09' does not match format '%Y年%m月%d日'
+2025-07-07 17:19:58,683 - model_ner - ERROR - 日期处理出错:time data '2010.11' does not match format '%Y年%m月%d日'
+2025-07-07 17:19:58,683 - model_ner - ERROR - 日期处理出错:time data '2014.07' does not match format '%Y年%m月%d日'
+2025-07-07 17:19:58,689 - model_ner - ERROR - 日期处理出错:time data '2006.09' does not match format '%Y年%m月%d日'
+2025-07-07 17:19:58,689 - model_ner - ERROR - 日期处理出错:time data '2009.07' does not match format '%Y年%m月%d日'
+2025-07-07 17:19:58,694 - model_ner - ERROR - 日期处理出错:time data '2002.09' does not match format '%Y年%m月%d日'
+2025-07-07 17:19:58,695 - model_ner - ERROR - 日期处理出错:time data '2006.07' does not match format '%Y年%m月%d日'
+2025-07-07 17:19:58,902 - model_ner - INFO - 总耗时:5.0778725147247314
+2025-07-07 17:20:34,102 - model_ner - ERROR - 日期处理出错:time data '2016/07-2021/02' does not match format '%Y年%m月%d日'
+2025-07-07 17:20:34,138 - model_ner - ERROR - 日期处理出错:time data '2016/07-2021/02' does not match format '%Y年%m月%d日'
+2025-07-07 17:20:34,813 - model_ner - ERROR - 日期处理出错:time data '2014/1' does not match format '%Y年%m月%d日'
+2025-07-07 17:20:34,974 - model_ner - ERROR - 日期处理出错:time data '2006.09' does not match format '%Y年%m月%d日'
+2025-07-07 17:20:34,974 - model_ner - ERROR - 日期处理出错:time data '2010.11' does not match format '%Y年%m月%d日'
+2025-07-07 17:20:34,974 - model_ner - ERROR - 日期处理出错:time data '2014.07' does not match format '%Y年%m月%d日'
+2025-07-07 17:20:34,989 - model_ner - ERROR - 日期处理出错:time data '2006.09' does not match format '%Y年%m月%d日'
+2025-07-07 17:20:34,989 - model_ner - ERROR - 日期处理出错:time data '2009.07' does not match format '%Y年%m月%d日'
+2025-07-07 17:20:35,000 - model_ner - ERROR - 日期处理出错:time data '2002.09' does not match format '%Y年%m月%d日'
+2025-07-07 17:20:35,000 - model_ner - ERROR - 日期处理出错:time data '2006.07' does not match format '%Y年%m月%d日'
+2025-07-07 17:20:35,250 - model_ner - INFO - 总耗时:1.441467046737671
+2025-07-07 17:23:20,818 - model_ner - INFO - 总耗时:4.777354717254639
+2025-07-07 17:23:54,259 - model_ner - INFO - 总耗时:1.3777861595153809
+2025-07-07 17:57:00,853 - model_ner - INFO - 总耗时:1.4983150959014893
+2025-07-07 18:00:07,091 - model_ner - INFO - 模型后处理耗时:5.184351444244385
+2025-07-07 18:00:40,966 - model_ner - INFO - 模型后处理耗时:1.3846333026885986
+2025-07-07 18:01:17,728 - model_ner - INFO - 模型后处理耗时:1.3280432224273682
+2025-07-07 18:02:37,734 - model_ner - INFO - 模型后处理耗时:1.706972360610962
+2025-07-07 18:03:17,144 - model_ner - INFO - 模型后处理耗时:1.2828655242919922
+2025-07-07 18:03:54,990 - model_ner - INFO - 模型后处理耗时:1.3676061630249023
+2025-07-07 18:06:48,086 - model_ner - INFO - 模型后处理耗时:1.554401159286499
+2025-07-07 18:07:54,215 - model_ner - INFO - 模型后处理耗时:1.365628957748413
+2025-07-08 14:06:25,196 - model_ner - INFO - 模型后处理耗时:4.332101821899414
+2025-07-08 14:09:40,810 - model_ner - INFO - 模型后处理耗时:4.028972148895264
+2025-07-08 14:11:35,030 - model_ner - INFO - 模型后处理耗时:3.9487874507904053
+2025-07-08 14:18:50,384 - model_ner - INFO - 模型后处理耗时:3.589137077331543
+2025-07-08 14:21:23,344 - model_ner - INFO - 模型后处理耗时:3.8858654499053955
+2025-07-08 14:30:54,770 - model_ner - INFO - 模型后处理耗时:4.044045925140381
+2025-07-08 14:32:59,312 - model_ner - INFO - 模型后处理耗时:0.47271227836608887
+2025-07-08 14:33:52,426 - model_ner - INFO - 模型后处理耗时:0.476574182510376
+2025-07-08 14:35:24,742 - model_ner - INFO - 模型后处理耗时:3.7069945335388184
+2025-07-08 14:37:43,955 - model_ner - INFO - 模型后处理耗时:3.825719118118286
+2025-07-08 14:42:36,457 - model_ner - INFO - 模型后处理耗时:3.585155487060547
+2025-07-08 16:10:40,206 - model_ner - INFO - 模型后处理耗时:3.775872230529785
