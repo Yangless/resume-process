@@ -1,0 +1,15 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+web_rankings_pdf_output
+web_rankings_pdf_output2
+web_rankings_pdf_output3
+model
+*.egg-info
+.venv/
+
+# Virtual environments
+.venv

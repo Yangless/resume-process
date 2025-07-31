@@ -1,0 +1,12 @@
+aiohttp
+dateparser
+fastapi
+jieba
+pandas
+pydantic
+rapidfuzz==3.13.0
+Requests
+spacy==3.8.7
+spacy_transformers==1.3.9
+uvicorn
+openpyxl
