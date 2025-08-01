@@ -2,71 +2,6 @@ import pandas as pd
 from thefuzz import fuzz
 from itertools import combinations
 import os
-
-# --- 步骤 0: 创建演示文件 (如果文件不存在) ---
-# 为了让脚本可以独立运行，我们先创建示例文件。
-# 如果你已经有了这两个文件，可以注释掉或删除这部分代码。
-def create_demo_files():
-    # 文件1: only_ranking_without_company.csv
-    ranking_data = {
-        '榜单名': [
-            '2018中国大数据企业50强名单',
-            '2022中国AI商业落地TOP100',
-            '2023全球独角兽榜'
-        ],
-        '榜单名简短': [
-            '中国大数据企业50强',
-            '中国AI商业落地TOP100',
-            '全球独角兽榜'
-        ]
-    }
-    pd.DataFrame(ranking_data).to_csv('only_ranking_without_company.csv', index=False, encoding='utf-8-sig')
-
-    # 文件2: 标签名_公司名_带别名_v3.csv
-    # 添加一些复杂情况用于测试：
-    # - 3M公司: 有一个需要被替换的标签。
-    # - 某科技公司: 有两个需要被替换且替换后高度相似的标签，还有一个不相关的。
-    # - 另一家公司: 标签替换后完全重复。
-    # - 正常公司: 标签各不相同。
-    company_data = {
-        '标签名': [
-            '世界500强',
-            '2018中国大数据企业50强名单', # 需要被替换
-            '2022中国AI商业落地TOP100',  # 需要被替换
-            '中国AI商业落地TOP100',      # 已是简短名
-            '2023全球独角兽榜',          # 需要被替换
-            '全球独角兽榜',              # 完全重复
-            '中国最佳雇主',
-            '中国最佳雇主'
-        ],
-        '公司名': [
-            '3M公司',
-            '3M公司',
-            '某科技公司',
-            '某科技公司',
-            '另一家公司',
-            '另一家公司',
-            '正常公司',
-            '正常公司' # 故意放一个不同公司的相同标签，以测试分组是否正确
-        ],
-        '公司别名': [
-            '3M公司,3M,3M中国有限公司,3M中国',
-            '3M公司,3M,3M中国有限公司,3M中国',
-            '某科技,AI Tech',
-            '某科技,AI Tech',
-            'Unicorn B',
-            'Unicorn B',
-            'Good Company',
-            'Good Company'
-        ]
-    }
-    pd.DataFrame(company_data).to_csv('标签名_公司名_替换后_v4.csv', index=False, encoding='utf-8-sig')
-
-    print("演示文件创建成功！")
-    print("-" * 30)
-
-# --- 主要逻辑开始 ---
-
 # 定义文件路径
 ranking_file = 'only_ranking_without_company.csv'
 company_file = '标签名_公司名_替换后_v5.csv'
@@ -89,12 +24,6 @@ except FileNotFoundError as e:
     print(f"错误: 找不到文件 {e.filename}。请确保文件在脚本所在目录。")
     exit()
 
-# 创建一个从“榜单名”到“榜单名简短”的映射字典，这样查找效率更高
-# pd.Series(values, index=keys).to_dict() 是一个高效的创建字典的方法
-# 创建一个从“榜单名”到“榜单名简短”的映射字典，这样查找效率更高
-# pd.Series(values, index=keys).to_dict() 是一个高效的创建字典的方法
-
-
 # 定义一个自定义函数来处理每个单元格的标签替换
 mapping_df.dropna(subset=['榜单名', '榜单名简短'], inplace=True)
 
@@ -107,7 +36,6 @@ def replace_tags_in_cell(cell_value, mapping_dict):
         return cell_value
     original_sub_tags = [tag.strip() for tag in cell_value.split(',')]
     replaced_sub_tags = [mapping_dict.get(tag, tag) for tag in original_sub_tags]
-    # 【安全加固】虽然上面已经清理了数据，但这里再加一层保护，确保万无一失
     # 将列表里所有非字符串（以防万一）的元素都转换为字符串
     final_tags = [str(tag) for tag in replaced_sub_tags]
     return ','.join(final_tags)

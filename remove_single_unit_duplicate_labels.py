@@ -3,64 +3,6 @@ from thefuzz import fuzz
 from itertools import combinations
 import os
 
-# --- 步骤 0: 创建演示文件 (如果文件不存在) ---
-# 为了让脚本可以独立运行，我们先创建示例文件。
-# 如果你已经有了这两个文件，可以注释掉或删除这部分代码。
-def create_demo_files():
-    # 文件1: only_ranking_without_company.csv
-    ranking_data = {
-        '榜单名': [
-            '2018中国大数据企业50强名单',
-            '2022中国AI商业落地TOP100',
-            '2023全球独角兽榜'
-        ],
-        '榜单名简短': [
-            '中国大数据企业50强',
-            '中国AI商业落地TOP100',
-            '全球独角兽榜'
-        ]
-    }
-    pd.DataFrame(ranking_data).to_csv('only_ranking_without_company.csv', index=False, encoding='utf-8-sig')
-
-    # 文件2: 标签名_公司名_带别名_v3.csv
-    # 添加了更复杂的测试用例
-    company_data = {
-        '标签名': [
-            "世界500强世界,财富500强",   # << 新增：测试单元格内相似性
-            '2018中国大数据企业50强名单',
-            '2022中国AI商业落地TOP100',
-            '中国AI商业落地TOP100',
-            '全球独角兽榜',
-            '全球独角兽榜',
-            '中国最佳雇主',
-            '高科技,创新企业' # << 新增：测试正常的、不相似的单元格内标签
-        ],
-        '公司名': [
-            '3M公司',
-            '3M公司',
-            '某科技公司',
-            '某科技公司',
-            '另一家公司',
-            '另一家公司',
-            '正常公司',
-            '正常公司'
-        ],
-        '公司别名': [
-            '3M公司,3M',
-            '3M公司,3M',
-            '某科技,AI Tech',
-            '某科技,AI Tech',
-            'Unicorn B',
-            'Unicorn B',
-            'Good Company',
-            'Good Company'
-        ]
-    }
-    pd.DataFrame(company_data).to_csv('标签名_公司名_带别名_v3.csv', index=False, encoding='utf-8-sig')
-
-    print("演示文件创建成功！")
-    print("-" * 30)
-
 # --- 主要逻辑开始 ---
 
 # 定义文件路径
